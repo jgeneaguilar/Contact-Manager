@@ -1,10 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { 
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton 
+} from '@material-ui/core';
+import Home from '@material-ui/icons/Home';
+import PersonAdd from '@material-ui/icons/PersonAdd';
 
 const Header = ({ branding }) => {
   return (
-    <div>
-      <h1>{branding}</h1>
+    <div style={styles.root}>
+      <AppBar position='static'>
+        <Toolbar>
+          <Typography variant='h6' color='inherit' style={styles.grow}>
+            {branding}
+          </Typography>
+          <IconButton color='inherit'>
+            <Home />
+          </IconButton>
+          <IconButton color='inherit'>
+            <PersonAdd />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 };
@@ -16,5 +36,14 @@ Header.defaultProps = {
 Header.propTypes = {
   branding: PropTypes.string.isRequired
 }
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  }
+};
 
 export default Header;
