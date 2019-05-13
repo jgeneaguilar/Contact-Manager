@@ -27,10 +27,10 @@ class Contact extends Component {
   }
 
   render() {
-    const { name, email, phone } = this.props;
-    
+    const { name, email, phone } = this.props.contact;
+
     return (
-      <List>
+      <List style={{margin: '25px'}}>
         <ListItem button onClick={this.handleClick}>
           <ListItemAvatar>
             <Avatar 
@@ -62,9 +62,7 @@ class Contact extends Component {
 }
 
 Contact.propTypes = {
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
+  contact: PropTypes.object.isRequired
 }
 
 export default Contact;
