@@ -9,6 +9,7 @@ import {
 import Home from '@material-ui/icons/Home';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 
+// Serve as the Navigation bar and for branding
 const Header = ({ branding }) => {
   return (
     <div style={styles.root}>
@@ -37,6 +38,7 @@ Header.propTypes = {
   branding: PropTypes.string.isRequired
 }
 
+// Place the two icon buttons to the right
 const styles = {
   root: {
     flexGrow: 1,

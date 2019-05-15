@@ -20,6 +20,7 @@ class Contact extends Component {
     open: true
   };
   
+  // Toggle the state
   handleClick = () => {
     this.setState(state => ({
       open: !state.open
@@ -33,7 +34,7 @@ class Contact extends Component {
       <List style={{margin: '25px'}}>
         <ListItem button onClick={this.handleClick}>
           <ListItemAvatar>
-            <Avatar 
+            <Avatar     {/* Change src to contact-specific photo */}
               alt='random cat'
               src='http://placekitten.com/40/40'
             />
