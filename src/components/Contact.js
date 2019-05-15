@@ -33,7 +33,7 @@ class Contact extends Component {
       <List style={{margin: '25px'}}>
         <ListItem button onClick={this.handleClick}>
           <ListItemAvatar>
-            <Avatar 
+            <Avatar     
               alt='random cat'
               src='http://placekitten.com/40/40'
             />
@@ -66,3 +66,7 @@ Contact.propTypes = {
 }
 
 export default Contact;
+
+/** TODO:
+ *  Change src placeholder to contact-specific photo. <Avatar> ln 36
+ */
