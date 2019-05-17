@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Contact from './Contact'
+import Contact from './Contact';
 
 
 const mockData = [
