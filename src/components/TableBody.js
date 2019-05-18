@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { 
   TableBody,
   TableRow,
-  TableCell
+  TableCell,
+  IconButton
 } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
-const Contact =({ contact: { name, email, phone, jobTitle, department } }) => {
-
-  return (
+const Contact =({ contact: { id, name, email, phone, jobTitle, department },       deleteHandler }) => (
     <TableBody>
       <TableRow>
         <TableCell component='th' scope='row' style={{border: 0}} >{name}</TableCell>
@@ -17,11 +17,15 @@ const Contact =({ contact: { name, email, phone, jobTitle, department } }) => {
         <TableCell style={{border: 0}} align='right'>{phone}</TableCell>
         <TableCell style={{border: 0}} align='right'>{jobTitle}</TableCell>
         <TableCell style={{border: 0}} align='right'>{department}</TableCell>
-        <TableCell style={{border: 0}} align='right'></TableCell>
+        <TableCell style={{border: 0}} align='right'>
+          <IconButton onClick={() => deleteHandler(id)}>
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
       </TableRow>
     </TableBody>
-  );
-}
+);
+
 
 
 Contact.propTypes = {
