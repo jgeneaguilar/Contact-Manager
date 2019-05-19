@@ -7,6 +7,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const Contact =({ contact: { id, name, email, phone, jobTitle, department },       deleteHandler }) => (
@@ -18,6 +19,9 @@ const Contact =({ contact: { id, name, email, phone, jobTitle, department },    
         <TableCell style={{border: 0}} align='right'>{jobTitle}</TableCell>
         <TableCell style={{border: 0}} align='right'>{department}</TableCell>
         <TableCell style={{border: 0}} align='right'>
+          <IconButton>
+            <EditIcon />
+          </IconButton>
           <IconButton onClick={() => deleteHandler(id)}>
             <DeleteIcon />
           </IconButton>
@@ -27,9 +31,9 @@ const Contact =({ contact: { id, name, email, phone, jobTitle, department },    
 );
 
 
-
 Contact.propTypes = {
-  contact: PropTypes.object.isRequired
+  contact: PropTypes.object.isRequired,
+  deleteHandler: PropTypes.func.isRequired
 }
 
 export default Contact;

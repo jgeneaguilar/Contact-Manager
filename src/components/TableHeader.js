@@ -17,5 +17,6 @@ const Header = () => {
     </TableHead>
   );
 }
+// Add 6th TableCell element with no children to provide space for buttons
 
 export default Header;
