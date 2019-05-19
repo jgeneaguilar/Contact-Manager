@@ -4,17 +4,7 @@ import Contact from './TableBody';
 import { Table } from '@material-ui/core';
 import { Consumer } from '../context';
 
-
-
 class Contacts extends Component {
- 
-  deleteContact = id => {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => 
-        contact.id !== id
-      )
-    })
-  }
   render() {
     
     return (
@@ -28,7 +18,6 @@ class Contacts extends Component {
                 <Contact
                   key={contact.id}
                   contact={contact}
-                  deleteHandler={this.deleteContact}
                 />
               ))}
             </Table>
@@ -38,6 +27,5 @@ class Contacts extends Component {
     );
   }
 }
-
 
 export default Contacts;
