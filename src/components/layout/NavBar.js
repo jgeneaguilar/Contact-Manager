@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Consumer } from '../../context';
 import { 
   AppBar,
   Toolbar,
@@ -11,22 +12,39 @@ import PersonAdd from '@material-ui/icons/PersonAdd';
 
 // Serve as the Navigation bar and for branding
 const NavBar = ({ branding }) => {
+
+  const toggleDialog = dispatch => {
+    dispatch({
+      type: 'TOGGLE_DIALOG'
+    });
+  }
+
   return (
-    <div style={styles.root}>
-      <AppBar position='static'>
-        <Toolbar>
-          <Typography variant='h6' color='inherit' style={styles.grow}>
-            {branding}
-          </Typography>
-          <IconButton color='inherit'>
-            <Home />
-          </IconButton>
-          <IconButton color='inherit'>
-            <PersonAdd />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <Consumer>
+      {value => {
+        const { dispatch } = value;
+
+        return (
+          <div style={styles.root}>
+            <AppBar position='static'>
+              <Toolbar>
+                <Typography variant='h6' color='inherit' style={styles.grow}>
+                  {branding}
+                </Typography>
+                <IconButton color='inherit'>
+                  <Home />
+                </IconButton>
+                <IconButton 
+                  color='inherit'
+                  onClick={() => toggleDialog(dispatch)}
+                >
+                  <PersonAdd />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+          </div>
+        )}}
+    </Consumer>
   );
 };
 

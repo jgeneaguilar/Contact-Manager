@@ -12,6 +12,18 @@ const reducer = (state, action) => {
           contact => contact.id !== action.payload
         )
       };
+    case 'TOGGLE_DIALOG':
+      return {
+        openDialog: !state.openDialog
+      };
+    case 'ADD_CONTACT':
+      return {
+        ...state,
+        contacts: [
+          ...state.contacts,
+          action.payload
+        ]
+      }
     default:
       return state;
   }
@@ -22,6 +34,7 @@ export class ContactData extends Component {
     contacts: [
       ...mockData
     ],
+    openDialog: false,
     dispatch: action => this.setState(
       state => reducer(state, action)
     )
