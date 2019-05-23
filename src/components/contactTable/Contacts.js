@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './TableHeader';
 import Contact from './TableBody';
 import { Table } from '@material-ui/core';
-import { Consumer } from '../context';
+import { Consumer } from '../../context';
 
 class Contacts extends Component {
   render() {
