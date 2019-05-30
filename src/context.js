@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { mockData } from './dataStore';
+import axios from 'axios';
 
 const ContactContext = React.createContext();
 
@@ -30,6 +31,16 @@ const reducer = (state, action) => {
 };
 
 export class ContactData extends Component {
+  constructor(props) {
+    super(props);
+
+    this.api = axios.create({
+      baseURL: 'https://my-json-server.typicode.com/jgeneaguilar/jsonplaceholder',
+      timeout: 10000,
+      headers: {'Content-Type': 'application/json'}
+    });
+
+  }
   state = {
     contacts: [
       ...mockData
@@ -38,6 +49,21 @@ export class ContactData extends Component {
     dispatch: action => this.setState(
       state => reducer(state, action)
     )
+  };
+
+  componentDidMount() {
+    this.api.get('/contacts')
+      .then(response => {
+        // handle success
+        console.log(response);
+        this.setState({
+          contacts: [
+            ...response.data
+          ]
+        });
+      }).catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
