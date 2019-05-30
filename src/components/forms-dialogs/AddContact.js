@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Consumer } from '../../context';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+import contactURL from '../../store/url';
+import axios from 'axios';
 
 class AddContact extends Component {
   state = {
@@ -32,6 +35,37 @@ class AddContact extends Component {
       type: 'TOGGLE_DIALOG'
     })
   }
+  
+  submitContact = (dispatch) => {
+    const { name, email, phone, jobTitle, department } = this.state;
+
+    const newContact = {
+      name,
+      email,
+      phone,
+      jobTitle,
+      department
+    }
+
+    axios
+      .post(`${contactURL}/contacts/`, newContact)
+      .then(response => dispatch({
+        type: 'ADD_CONTACT',
+        payload: response.data
+      }));
+
+    // Clear the fields. Need refactoring
+    this.setState({
+      name: '',
+      email: '',
+      phone: '',
+      jobTitle: '',
+      department: '',
+    })
+
+    // Close the dialog
+    this.handleClose(dispatch);
+  }
 
   render() {
     const { name, email, phone, jobTitle, department } = this.state;
@@ -51,54 +85,66 @@ class AddContact extends Component {
                 <DialogContentText>
                   Please fill out the following information
                 </DialogContentText>
-                <TextField 
-                  autoFocus
-                  required
-                  label='Name'
-                  name='name'
-                  placeholder='Enter Name...'
-                  value={name}
-                  onChange={this.handleChange}
-                  margin='dense'
-                />
-                <TextField 
-                  type='email'
-                  autoComplete='email'
-                  label='Email'
-                  name='email'
-                  placeholder='Enter Email...'
-                  value={email}
-                  onChange={this.handleChange}
-                  margin='dense'
-                />
-                <TextField 
-                  label='Phone'
-                  name='phone'
-                  placeholder='Enter Phone...'
-                  value={phone}
-                  onChange={this.handleChange}
-                  margin='dense'
-                />
-                <TextField 
-                  label='Job Title'
-                  name='jobTitle'
-                  placeholder='Enter Job Title...'
-                  value={jobTitle}
-                  onChange={this.handleChange}
-                  margin='dense'
-                />
-                <TextField 
-                  label='Department'
-                  name='department'
-                  placeholder='Enter Department...'
-                  value={department}
-                  onChange={this.handleChange}
-                  margin='dense'
-                />
+                  <TextField 
+                    autoFocus
+                    required
+                    label='Name'
+                    name='name'
+                    placeholder='Enter Name...'
+                    value={name}
+                    onChange={this.handleChange}
+                    margin='dense'
+                  />
+                  <TextField 
+                    type='email'
+                    autoComplete='email'
+                    label='Email'
+                    name='email'
+                    placeholder='Enter Email...'
+                    value={email}
+                    onChange={this.handleChange}
+                    margin='dense'
+                  />
+                  <TextField 
+                    label='Phone'
+                    name='phone'
+                    placeholder='Enter Phone...'
+                    value={phone}
+                    onChange={this.handleChange}
+                    margin='dense'
+                  />
+                  <TextField 
+                    label='Job Title'
+                    name='jobTitle'
+                    placeholder='Enter Job Title...'
+                    value={jobTitle}
+                    onChange={this.handleChange}
+                    margin='dense'
+                  />
+                  <TextField 
+                    label='Department'
+                    name='department'
+                    placeholder='Enter Department...'
+                    value={department}
+                    onChange={this.handleChange}
+                    margin='dense'
+                  />
               </DialogContent>
               <DialogActions>
-                <Button>Add Another</Button>
-                <Button>Save</Button>
+                <Button
+                  variant='contained'
+                  size='small'
+                  >
+                  Add Another
+                </Button>
+                <Button
+                  variant='contained'
+                  size='small'
+                  onClick={() => this.submitContact(dispatch)}
+                >
+                  <SaveIcon />
+                  Save
+                </Button>
               </DialogActions>
             </Dialog>
           )}}

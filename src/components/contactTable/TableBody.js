@@ -9,17 +9,22 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import contactURL from '../../store/url';
+import axios from 'axios';
+
 
 
 const Contact = ({ 
-  contact: { id, name, email, phone, jobTitle, department }}) => {
+  contact: { _id, name, email, phone, jobTitle, department }}) => {
 
-  const deleteHandler = (id, dispatch) => {
-    dispatch({
-      type: 'DELETE_CONTACT',
-      payload: id
-    });
-  }
+  const deleteContact = (_id, dispatch) => {
+    axios
+      .delete(`${contactURL}/contacts/${_id}`)
+      .then(response => dispatch({
+        type: 'DELETE_CONTACT',
+        payload: _id
+      }));
+  };
 
   return (
     <Consumer>
@@ -37,7 +42,7 @@ const Contact = ({
                 <IconButton>
                   <EditIcon />
                 </IconButton>
-                <IconButton onClick={() => deleteHandler(id, dispatch)}>
+                <IconButton onClick={() => deleteContact(_id, dispatch)}>
                   <DeleteIcon />
                 </IconButton>
               </TableCell>

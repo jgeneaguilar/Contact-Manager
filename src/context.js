@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { mockData } from './dataStore';
+import contactURL from './store/url';
 import axios from 'axios';
 
 const ContactContext = React.createContext();
@@ -10,7 +10,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         contacts: state.contacts.filter(
-          contact => contact.id !== action.payload
+          contact => contact._id !== action.payload
         )
       };
     case 'TOGGLE_DIALOG':
@@ -35,7 +35,7 @@ export class ContactData extends Component {
     super(props);
 
     this.api = axios.create({
-      baseURL: 'https://gcontacts-api.herokuapp.com',
+      baseURL: contactURL,
       //timeout: 10000,
       headers: {'Content-Type': 'application/json'}
     });
@@ -50,7 +50,8 @@ export class ContactData extends Component {
   };
 
   componentDidMount() {
-    this.api.get('/contacts')
+    this.api
+      .get('/contacts')
       .then(response => {
         // handle success
         console.log(response);
@@ -59,7 +60,8 @@ export class ContactData extends Component {
             ...response.data
           ]
         });
-      }).catch(error => {
+      })
+      .catch(error => {
         console.log(error);
       });
   };
