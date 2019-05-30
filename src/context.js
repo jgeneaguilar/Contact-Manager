@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mockData } from './dataStore';
+//import { mockData } from './dataStore';
 import axios from 'axios';
 
 const ContactContext = React.createContext();
@@ -35,16 +35,14 @@ export class ContactData extends Component {
     super(props);
 
     this.api = axios.create({
-      baseURL: 'https://my-json-server.typicode.com/jgeneaguilar/jsonplaceholder',
-      timeout: 10000,
+      baseURL: 'https://gcontacts-api.herokuapp.com',
+      //timeout: 10000,
       headers: {'Content-Type': 'application/json'}
     });
 
   }
   state = {
-    contacts: [
-      ...mockData
-    ],
+    contacts: [],
     openDialog: false,
     dispatch: action => this.setState(
       state => reducer(state, action)

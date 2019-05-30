@@ -16,7 +16,7 @@ class Contacts extends Component {
               <Header />
               {contacts.map(contact => (
                 <Contact
-                  key={contact.id}
+                  key={contact._id}
                   contact={contact}
                 />
               ))}
