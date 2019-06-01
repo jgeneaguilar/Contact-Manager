@@ -15,7 +15,7 @@ const NavBar = ({ branding }) => {
 
   const toggleDialog = dispatch => {
     dispatch({
-      type: 'TOGGLE_DIALOG'
+      type: 'ADD_DIALOG'
     });
   }
 

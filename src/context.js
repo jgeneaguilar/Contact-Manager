@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import contactURL from './store/url';
 import axios from 'axios';
 
-const ContactContext = React.createContext();
+export const ContactContext = React.createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -13,9 +13,21 @@ const reducer = (state, action) => {
           contact => contact._id !== action.payload
         )
       };
-    case 'TOGGLE_DIALOG':
+    case 'ADD_DIALOG':
       return {
-        openDialog: !state.openDialog
+        openDialog: !state.openDialog,
+        editMode: false,
+      };
+    case 'EDIT_DIALOG':
+      return {
+        ...state,
+        openDialog: !state.openDialog,
+        editMode: true,
+        currentContact: {
+          ...state.contacts.find(
+            contact => contact._id === action.payload
+          )
+        }
       };
     case 'ADD_CONTACT':
       return {
@@ -44,6 +56,14 @@ export class ContactData extends Component {
   state = {
     contacts: [],
     openDialog: false,
+    editMode: false,
+    currentContact: {
+      name: '',
+      email: '',
+      phone: '',
+      jobTitle: '',
+      department: ''
+    },
     dispatch: action => this.setState(
       state => reducer(state, action)
     )

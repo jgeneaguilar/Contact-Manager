@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Consumer } from '../../context';
+import { ContactContext, Consumer } from '../../context';
 import {
   Button,
   TextField,
@@ -13,13 +13,13 @@ import SaveIcon from '@material-ui/icons/Save';
 import contactURL from '../../store/url';
 import axios from 'axios';
 
-class AddContact extends Component {
+// This is a fully uncontrolled component with a key
+
+class ContactInput extends Component {
+  static contextType = ContactContext;
+
   state = {
-    name: '',
-    email: '',
-    phone: '',
-    jobTitle: '',
-    department: '',
+    ...this.context.currentContact
   }
 
   handleChange = event => {
@@ -32,11 +32,11 @@ class AddContact extends Component {
 
   handleClose = dispatch => {
     dispatch({
-      type: 'TOGGLE_DIALOG'
+      type: 'ADD_DIALOG'
     })
   }
   
-  submitContact = (dispatch) => {
+  submitContact = (dispatch, isReset) => {
     const { name, email, phone, jobTitle, department } = this.state;
 
     const newContact = {
@@ -45,7 +45,7 @@ class AddContact extends Component {
       phone,
       jobTitle,
       department
-    }
+    };
 
     axios
       .post(`${contactURL}/contacts/`, newContact)
@@ -61,14 +61,17 @@ class AddContact extends Component {
       phone: '',
       jobTitle: '',
       department: '',
-    })
+    });
 
     // Close the dialog
-    this.handleClose(dispatch);
+    if (isReset) {
+      this.handleClose(dispatch)
+    }
   }
 
   render() {
-    const { name, email, phone, jobTitle, department } = this.state;
+    const { name, email, phone, jobTitle, department } = this.state,
+          { title, subTitle, isAdd } = this.props;
 
     return (
       <Consumer>
@@ -80,10 +83,10 @@ class AddContact extends Component {
               open={openDialog}
               onClose={() => this.handleClose(dispatch)}
             >
-              <DialogTitle>Add New Contact</DialogTitle>
+              <DialogTitle>{title}</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  Please fill out the following information
+                  {subTitle}
                 </DialogContentText>
                   <TextField 
                     autoFocus
@@ -131,16 +134,19 @@ class AddContact extends Component {
                   />
               </DialogContent>
               <DialogActions>
-                <Button
-                  variant='contained'
-                  size='small'
+                {isAdd ? (
+                  <Button
+                    variant='contained'
+                    size='small'
+                    onClick={() => this.submitContact(dispatch, false)}
                   >
-                  Add Another
-                </Button>
+                    Add Another
+                  </Button>
+                ) : null}
                 <Button
                   variant='contained'
                   size='small'
-                  onClick={() => this.submitContact(dispatch)}
+                  onClick={() => this.submitContact(dispatch, true)}
                 >
                   <SaveIcon />
                   Save
@@ -153,4 +159,4 @@ class AddContact extends Component {
   }
 }
 
-export default AddContact;
+export default ContactInput;

@@ -1,9 +1,8 @@
 import React from 'react';
 import NavBar from './components/layout/NavBar';
 import Contacts from './components/contactTable/Contacts';
-import AddContact from './components/forms-dialogs/AddContact';
+import FormFields from './components/forms-dialogs/FormFields';
 import { ContactData } from './context';
-
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
       <div className="App">
         <NavBar branding="Contact Manager" />
         <Contacts />
-        <AddContact />
+        <FormFields />
       </div>
     </ContactData>
   );

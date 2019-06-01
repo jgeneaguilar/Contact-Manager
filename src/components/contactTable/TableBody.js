@@ -26,12 +26,19 @@ const Contact = ({
       }));
   };
 
+  const editContact = (dispatch, _id) => {
+    dispatch({
+      type: 'EDIT_DIALOG',
+      payload: _id
+    });
+  };
+
   return (
     <Consumer>
       {value => {
         const { dispatch } = value;
         return (
-          <TableBody>
+          <TableBody style={{overflowY: 'auto'}}>
             <TableRow>
               <TableCell component='th' scope='row' style={{ border: 0 }} >{name}</TableCell>
               <TableCell style={{ border: 0 }} align='right'>{email}</TableCell>
@@ -39,7 +46,7 @@ const Contact = ({
               <TableCell style={{ border: 0 }} align='right'>{jobTitle}</TableCell>
               <TableCell style={{ border: 0 }} align='right'>{department}</TableCell>
               <TableCell style={{ border: 0 }} align='right'>
-                <IconButton>
+                <IconButton onClick={() => editContact(dispatch, _id)}>
                   <EditIcon />
                 </IconButton>
                 <IconButton onClick={() => deleteContact(_id, dispatch)}>
