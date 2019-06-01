@@ -29,6 +29,18 @@ const reducer = (state, action) => {
           )
         }
       };
+    case 'RESET_FIELDS':
+      return {
+        editMode: false,
+        currentContact: {
+          _id: '',
+          name: '',
+          email: '',
+          phone: '',
+          jobTitle: '',
+          department: '',
+        }
+      };
     case 'ADD_CONTACT':
       return {
         ...state,
@@ -36,7 +48,16 @@ const reducer = (state, action) => {
           ...state.contacts,
           action.payload
         ]
-      }
+      };
+    case 'UPDATE_CONTACT':
+      return {
+        ...state,
+        contacts: state.contacts.map(
+          contact => contact._id === action.payload._id
+            ? contact = action.payload
+            : contact
+        )
+      };
     default:
       return state;
   }

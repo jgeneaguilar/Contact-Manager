@@ -35,9 +35,24 @@ class ContactInput extends Component {
       type: 'ADD_DIALOG'
     })
   }
+
+  resetFields = (dispatch) => {
+    this.setState({
+      _id: '',
+      name: '',
+      email: '',
+      phone: '',
+      jobTitle: '',
+      department: ''
+    })
+    dispatch({
+      type: 'RESET_FIELDS',
+    });
+  }
   
   submitContact = (dispatch, isReset) => {
-    const { name, email, phone, jobTitle, department } = this.state;
+    const { _id, name, email, phone, jobTitle, department } = this.state,
+          { editMode } = this.context;
 
     const newContact = {
       name,
@@ -47,25 +62,27 @@ class ContactInput extends Component {
       department
     };
 
-    axios
-      .post(`${contactURL}/contacts/`, newContact)
-      .then(response => dispatch({
-        type: 'ADD_CONTACT',
-        payload: response.data
-      }));
-
-    // Clear the fields. Need refactoring
-    this.setState({
-      name: '',
-      email: '',
-      phone: '',
-      jobTitle: '',
-      department: '',
-    });
-
-    // Close the dialog
+    if (editMode) {
+      axios
+        .put(`${contactURL}/contacts/${_id}`, newContact)
+        .then(response => dispatch({
+          type: 'UPDATE_CONTACT',
+          payload: response.data
+        }));
+    } else {
+      axios
+        .post(`${contactURL}/contacts/`, newContact)
+        .then(response => dispatch({
+          type: 'ADD_CONTACT',
+          payload: response.data
+        }));
+    }
+    
     if (isReset) {
-      this.handleClose(dispatch)
+      this.resetFields(dispatch);
+      this.handleClose(dispatch);
+    } else {
+      this.resetFields(dispatch);
     }
   }
 
@@ -134,6 +151,13 @@ class ContactInput extends Component {
                   />
               </DialogContent>
               <DialogActions>
+                <Button
+                  variant='contained'
+                  size='small'
+                  onClick={() => this.resetFields(dispatch, true)}
+                >
+                  Cancel
+                </Button>
                 {isAdd ? (
                   <Button
                     variant='contained'
