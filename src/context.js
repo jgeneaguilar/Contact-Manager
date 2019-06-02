@@ -85,6 +85,7 @@ export class ContactData extends Component {
       jobTitle: '',
       department: ''
     },
+    isLoading: true,
     dispatch: action => this.setState(
       state => reducer(state, action)
     )
@@ -97,6 +98,7 @@ export class ContactData extends Component {
         // handle success
         console.log(response);
         this.setState({
+          isLoading: false,
           contacts: [
             ...response.data
           ]
