@@ -98,6 +98,7 @@ export class ContactData extends Component {
         // handle success
         console.log(response);
         this.setState({
+          // to unmount the linear progress bar
           isLoading: false,
           contacts: [
             ...response.data

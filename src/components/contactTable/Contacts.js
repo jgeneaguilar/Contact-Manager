@@ -12,6 +12,7 @@ class Contacts extends Component {
           const { isLoading, contacts } = value;
           return (
             <Fragment>
+              {/** Show the linear progress bar while waiting for the res */}
               {isLoading ? (
                 <LinearProgress 
                   variant={'indeterminate'}

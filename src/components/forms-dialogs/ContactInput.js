@@ -50,6 +50,11 @@ class ContactInput extends Component {
     });
   }
   
+  cancelInput = (dispatch) => {
+    this.resetFields(dispatch);
+    this.handleClose(dispatch);
+  }
+
   submitContact = (dispatch, isReset) => {
     const { _id, name, email, phone, jobTitle, department } = this.state,
           { editMode } = this.context;
@@ -79,8 +84,7 @@ class ContactInput extends Component {
     }
     
     if (isReset) {
-      this.resetFields(dispatch);
-      this.handleClose(dispatch);
+      this.cancelInput(dispatch);
     } else {
       this.resetFields(dispatch);
     }
@@ -154,7 +158,7 @@ class ContactInput extends Component {
                 <Button
                   variant='contained'
                   size='small'
-                  onClick={() => this.resetFields(dispatch, true)}
+                  onClick={() => this.cancelInput(dispatch)}
                 >
                   Cancel
                 </Button>
