@@ -102,7 +102,6 @@ class ContactInput extends Component {
           return (
             <Dialog
               open={openDialog}
-              onClose={() => this.handleClose(dispatch)}
             >
               <DialogTitle>{title}</DialogTitle>
               <DialogContent>
