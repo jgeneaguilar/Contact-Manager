@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ContactContext, Consumer } from '../../context';
+import FormFields from './FormFields';
 import {
   Button,
   TextField,
@@ -102,7 +103,7 @@ class ContactInput extends Component {
           return (
             <Dialog
               open={openDialog}
-              onClose={() => this.handleClose(dispatch)}
+              onClose={() => this.cancelInput(dispatch)}
             >
               <DialogTitle>{title}</DialogTitle>
               <DialogContent>

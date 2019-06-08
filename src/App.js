@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from './components/layout/NavBar';
 import Contacts from './components/contactTable/Contacts';
-import FormFields from './components/forms-dialogs/FormFields';
+import FormDialog from './components/forms-dialogs/FormDialog';
 import { ContactData } from './context';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <div className="App">
         <NavBar branding="Contact Manager" />
         <Contacts />
-        <FormFields />
+        <FormDialog />
       </div>
     </ContactData>
   );
