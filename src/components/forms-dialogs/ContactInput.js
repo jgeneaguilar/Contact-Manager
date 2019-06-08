@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ContactContext, Consumer } from '../../context';
-import FormFields from './FormFields';
+
 import {
   Button,
   TextField,
@@ -31,12 +31,6 @@ class ContactInput extends Component {
     })
   }
 
-  handleClose = dispatch => {
-    dispatch({
-      type: 'ADD_DIALOG'
-    })
-  }
-
   resetFields = (dispatch) => {
     this.setState({
       _id: '',
@@ -53,7 +47,9 @@ class ContactInput extends Component {
   
   cancelInput = (dispatch) => {
     this.resetFields(dispatch);
-    this.handleClose(dispatch);
+    dispatch({
+      type: 'ADD_DIALOG'
+    })
   }
 
   submitContact = (dispatch, isReset) => {
